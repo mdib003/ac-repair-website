@@ -32,8 +32,8 @@ export const BrandsList = () => {
                 >
                     {brandsImageList.map((img) => {
                         return (
-                            <SwiperSlide>
-                                <div className="brand-img">
+                            <SwiperSlide key={img}>
+                                <div className="brand-img" >
                                     <Image src={img} alt='img' fill style={{ objectFit: 'cover' }} />
                                 </div>
                             </SwiperSlide>
