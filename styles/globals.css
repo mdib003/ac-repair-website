@@ -134,6 +134,35 @@ body {
   padding-bottom: 64px;
 }
 
+.container-mar {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.working-steps-container {
+  width: 100%;
+  background-color: var(--primary-color);
+}
+
+.steps-swiper {
+  padding: 38px !important;
+}
+
+.steps-swiper-slide {
+  height: auto !important;
+}
+
+.swiper-button-prev {
+  left: var(--swiper-navigation-sides-offset,-2px) !important;
+  color: var(--white) !important;
+}
+
+.swiper-button-next {
+  right: var(--swiper-navigation-sides-offset, -2px) !important;
+  color: var(--white) !important;
+
+}
+
 @media only screen and (max-width:767px) {
   .brand-img {
     width: 160px;
@@ -156,6 +185,16 @@ body {
 
   .home-page-details h1 {
     font-size: 28px;
+  }
+
+  .container-pad {
+    padding-top: 44px;
+    padding-bottom: 44px;
+  }
+
+  .container-mar {
+    margin-top: 44px;
+    margin-bottom: 44px;
   }
 }
 
