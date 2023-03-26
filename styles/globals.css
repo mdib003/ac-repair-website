@@ -5,6 +5,7 @@
   --primary-color: #4287f5;
   --white: #fff;
   --secondary-color: #e6655c;
+  --tertiary-color: #626769;
 }
 
 * {
@@ -41,13 +42,68 @@ body {
   color: var(--white);
   border-radius: 6px;
   font-size: 16px;
-  
+  border: 1px solid var(--white)
 }
 
 .nav-link:hover {  
   border-radius: 12px;
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
 }
 
 .active-link {
-  background-color: var(--secondary-color);
+  background-color: var(--white);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.home-page {
+  display: flex;
+  width: 100%;
+}
+
+.home-page-details {
+  width: 40%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.home-page-details-box {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.home-page-details h1 {
+  font-size: 36px;
+  color: var(--primary-color);
+  /* margin-left: 32px; */
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.home-page-details p {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--tertiary-color);
+}
+
+.home-page-banner {
+  width: 60%;
+  height: auto;
+  position: relative;
+}
+
+.home-page-banner img {
+  position: relative !important;
+  height: auto !important;
+}
+
+.home-nav-link {
+  display: block;
 }
