@@ -163,6 +163,16 @@ body {
 
 }
 
+.about-img img {
+  position: relative !important;
+  height: auto !important;
+}
+
+.about-img2 img {
+  position: relative !important;
+  height: auto !important;
+}
+
 @media only screen and (max-width:767px) {
   .brand-img {
     width: 160px;
