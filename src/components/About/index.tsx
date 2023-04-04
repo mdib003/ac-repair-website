@@ -11,26 +11,26 @@ export const AboutComponent = () => {
 
 
     useEffect(() => {
-        window.addEventListener('scroll', () => {
-
-            if (imageRef2?.current) {
-                let checkElementPosition = imageRef2?.current?.offsetTop < ((window.pageYOffset + window.innerHeight) - 300) ? true : false
-                if (checkElementPosition) {
-                    imageRef2?.current?.classList?.add('show-img')
-                } else {
-                    imageRef2?.current?.classList?.remove('show-img')
-                }
+        if (imageRef2?.current) {
+            
+            let checkElementPosition = imageRef2?.current?.getBoundingClientRect().top < (window.innerHeight - 150) ? true : false
+            if (checkElementPosition) {
+                console.log('checkElementPosition', checkElementPosition)
+                imageRef2?.current?.classList?.add('show-img')
+            } else {
+                imageRef2?.current?.classList?.remove('show-img')
             }
+        }
 
-            if (textRef2?.current) {
-                let checkElementPosition = textRef2?.current?.offsetTop < ((window.pageYOffset + window.innerHeight) - 250) ? true : false
-                if (checkElementPosition) {
-                    textRef2?.current?.classList?.add('translate-para')
-                } else {
-                    textRef2?.current?.classList?.remove('translate-para')
-                }
+        if (textRef2?.current) {
+            let checkElementPosition = textRef2?.current?.getBoundingClientRect().top < (window.innerHeight - 150) ? true : false
+            if (checkElementPosition) {
+                textRef2?.current?.classList?.add('translate-para')
+            } else {
+                textRef2?.current?.classList?.remove('translate-para')
             }
-        })
+        }
+
         if (textRef?.current) {
             textRef?.current?.classList?.add('translate-para')
         }
@@ -49,12 +49,16 @@ export const AboutComponent = () => {
                         </p>
                     </div>
                     <div className="about-img" ref={imageRef}>
-                        <Image src='/happy-house-owner-lying-on-couch.jpg' alt='happy-house-owner-lying-on-couch' fill style={{ objectFit: 'cover' }} />
+                        <Image src='/happy-house-owner-lying-on-couch.jpg' alt='happy-house-owner-lying-on-couch' fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw" priority={true}/>
                     </div>
                 </div>
                 <div className="flex about-section">
                     <div className="about-img2" ref={imageRef2}>
-                        <Image src='/272.jpg' alt='fixing the ac' fill style={{ objectFit: 'cover' }} />
+                        <Image src='/272.jpg' alt='fixing the ac' fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"/>
                     </div>
                     <div className="about-details2" ref={textRef2}>
                         <p className="about-para2"><span>You deserve Comfortable and Expert service, and with us, it’s right in the name.</span> We are Service Experts! Delivering comfort for our communities and making a difference in people’s lives.</p>
@@ -99,6 +103,7 @@ export const AboutComponent = () => {
                     height: auto;
                     opacity: 0;
                     transition: all 0.5s ease;
+                    position: relative;
                 }
 
                 .about-img2 {
@@ -106,6 +111,7 @@ export const AboutComponent = () => {
                     height: auto;
                     opacity: 0;
                     transition: all 0.5s ease;
+                    position: relative;
                 }
 
                 .show-img {
