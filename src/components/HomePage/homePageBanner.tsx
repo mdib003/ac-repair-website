@@ -12,7 +12,9 @@ export const HomePageBanner = () => {
                 </div>
             </div>
             <div className='home-page-banner'>
-                <Image src='/20944212.jpg' fill style={{ objectFit: 'cover' }} alt='home-img' />
+                <Image src='/20944212.jpg' fill style={{ objectFit: 'cover' }} alt='home-img' sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw" priority={true}/>
             </div>
         </div>
     )
