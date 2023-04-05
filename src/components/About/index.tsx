@@ -17,18 +17,18 @@ export const AboutComponent = () => {
             if (checkElementPosition) {
                 console.log('checkElementPosition', checkElementPosition)
                 imageRef2?.current?.classList?.add('show-img')
-            } else {
+            } /* else {
                 imageRef2?.current?.classList?.remove('show-img')
-            }
+            } */
         }
 
         if (textRef2?.current) {
             let checkElementPosition = textRef2?.current?.getBoundingClientRect().top < (window.innerHeight - 150) ? true : false
             if (checkElementPosition) {
                 textRef2?.current?.classList?.add('translate-para')
-            } else {
+            } /* else {
                 textRef2?.current?.classList?.remove('translate-para')
-            }
+            } */
         }
 
         if (textRef?.current) {
@@ -41,7 +41,7 @@ export const AboutComponent = () => {
     }, [])
     return (
         <>
-            <div className="container" ref={containerRef}>
+            <div className="container container-pad" ref={containerRef}>
                 <div className="flex about-section">
                     <div className="about-details" ref={textRef}>
                         <p className="about-para" ><span>At Homecomfort India,</span> we strive to spread comfort and customer satisfaction wherever we go. With an amazing team of experienced, local professionals, you can always count on us for top-notch service. </p>
