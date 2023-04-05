@@ -5,6 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
+        <title>HomeComfort India</title>
       </Head>
       <main>
         <HomePageComponent />

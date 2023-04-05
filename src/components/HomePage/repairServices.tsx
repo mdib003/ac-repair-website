@@ -34,9 +34,9 @@ export const RepairServices = () => {
                 <h2>Our Services</h2>
                 <div className="cards-box">
                     {
-                        cardsData.map((c) => {
+                        cardsData.map((c, i) => {
                             return (
-                                <Link href='/'>
+                                <Link href='/' key={i}>
                                 <div className="card">
                                     <div className="card-img-box">
                                         <div className="card-img" style={{ backgroundImage: `url(${c.img})` }}></div>

@@ -180,6 +180,12 @@ body {
   color: inherit;
 }
 
+.repair-services-page input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @media only screen and (max-width:767px) {
   .brand-img {
     width: 160px;
