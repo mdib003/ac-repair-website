@@ -2,13 +2,13 @@
 import { BrandsList } from "./brandsList"
 import { HomePageBanner } from "./homePageBanner"
 import { WorkingSteps } from "./workingSteps";
-import { RepairServices } from "./repairServices"
+import { OurServices } from "./ourServices"
 
 export const HomePageComponent = () => {
     return (
         <>
         <HomePageBanner />
-        <RepairServices/>
+        <OurServices/>
         <WorkingSteps/>
         <BrandsList/>
         </>

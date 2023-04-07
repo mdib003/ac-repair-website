@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
+import Button from '@mui/material/Button';
 
 export const RepairServiceComponent = () => {
 
@@ -31,14 +32,38 @@ export const RepairServiceComponent = () => {
         setProblemState(e.target.value as string);
     }
 
+    const submitQuery =  async (e: Event) => {
+        e.preventDefault()
+        if (!fullName || !contactNo || !emailState || !address || !productCompany || !productCategory || !problemState || !check) {
+            return 
+        }
+
+        const data = {fullName, contactNo, emailState, address, productCompany, productCategory, problemState}
+
+        const submitData = await fetch('/api/sendEmail', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+              },
+            body: JSON.stringify(data)
+        })
+
+        const { error, message } = await submitData.json();
+        console.log(message);
+        return;
+      /*   const response = await submitData.json()
+        console.log(response) */
+        
+    }
+
     return (
         <>
             <div className="container container-pad repair-services-page">
                 <form>
-                    <TextField id="fullName" label="Full Name" variant="outlined" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                    <TextField id="mobileNumber" label="Contact No" variant="outlined" type="number" value={contactNo} onChange={(e) => setContactNo(parseInt(e.target.value))} />
-                    <TextField id="emailAddress" label="Email" variant="outlined" type="email" value={emailState} onChange={(e) => setEmailState(e.target.value)} />
-                    <TextField id="address" label="Address" variant="outlined" type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
+                    <TextField id="fullName" label="Full Name" variant="outlined" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required/>
+                    <TextField id="mobileNumber" label="Contact No" variant="outlined" type="number" value={contactNo} onChange={(e) => setContactNo(parseInt(e.target.value))} required/>
+                    <TextField id="emailAddress" label="Email" variant="outlined" type="email" value={emailState} onChange={(e) => setEmailState(e.target.value)} required/>
+                    <TextField id="address" label="Address" variant="outlined" type="text" value={address} onChange={(e) => setAddress(e.target.value)} required/>
                     <div style={{ width: '200px', marginTop: '20px' }}>
                         <FormControl fullWidth>
                             <InputLabel id="productCompany">Company</InputLabel>
@@ -46,8 +71,9 @@ export const RepairServiceComponent = () => {
                                 labelId="productCompany"
                                 id="productCompany"
                                 value={productCompany}
-                                label="Product Company"
+                                label="Company"
                                 onChange={productCompanyChange}
+                                required
                             >
                                 <MenuItem value={'Blue Star'}>Blue Star</MenuItem>
                                 <MenuItem value={'Bosch'}>Bosch</MenuItem>
@@ -68,7 +94,7 @@ export const RepairServiceComponent = () => {
                                 labelId="productCategory"
                                 id="productCategory"
                                 value={productCategory}
-                                label="Product Category"
+                                label="Category"
                                 onChange={productCategoryChange}
                             >
                                 <MenuItem value={'AC'}>AC</MenuItem>
@@ -108,6 +134,7 @@ export const RepairServiceComponent = () => {
                         <Checkbox checked={check} onChange={() => setCheck(!check)} />
                         <span>I authorize to contact me on my Mobile Number and Email</span>
                     </div>
+                    <button className='submit-button' onClick={submitQuery}>Submit</button>
                 </form>
             </div>
             <style jsx>{`

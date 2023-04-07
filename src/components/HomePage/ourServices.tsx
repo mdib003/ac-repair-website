@@ -6,10 +6,6 @@ const cardsData = [
         img: '/ac.png'
     },
     {
-        title: 'Air Cooler',
-        img: '/air-cooler.png'
-    },
-    {
         title: 'Fridge',
         img: '/FRIDGE.png'
     },
@@ -27,7 +23,7 @@ const cardsData = [
     },
 ]
 
-export const RepairServices = () => {
+export const OurServices = () => {
     return (
         <>
             <div className="container container-pad">
