@@ -11,6 +11,12 @@ import Button from '@mui/material/Button';
 export const RepairServiceComponent = () => {
 
     const [fullName, setFullName] = useState('')
+    const [userData, setUserData] = useState({
+        fullName: '',
+        email: '',
+        contactNo: '',
+        address: ''
+    })
     const [contactNo, setContactNo] = useState<number | "">("");
     const [emailState, setEmailState] = useState('')
     const [address, setAddress] = useState('')
@@ -19,6 +25,14 @@ export const RepairServiceComponent = () => {
     const [problemState, setProblemState] = useState('')
     const [check, setCheck] = useState(false)
     const [detailIssue, setDetailIssue] = useState('')
+    const [messageStatus, setMessageStatus] = useState("")
+    const [fullNameError, setFullNameError] = useState(false)
+    const [contactError, setContactError] = useState(false)
+    const [emailError, setEmailError] = useState(false)
+    const [companyError, setCompanyError] = useState(false)
+    const [categoryError, setCategoryError] = useState(false)
+    const [problemError, setProblemError] = useState(false)
+    /* const [disabledButtonState, setDisabledButtonState] = useState(false) */
 
     const productCompanyChange = (e: SelectChangeEvent) => {
         setProductComapny(e.target.value as string);
@@ -32,38 +46,50 @@ export const RepairServiceComponent = () => {
         setProblemState(e.target.value as string);
     }
 
-    const submitQuery =  async (e: Event) => {
-        e.preventDefault()
-        if (!fullName || !contactNo || !emailState || !address || !productCompany || !productCategory || !problemState || !check) {
-            return 
-        }
+    const fullNameHandler = (e) => {
+        const [name, value] = e.target
+        setUserData({...userData, [name]: value})
+     /*    if (!fullName) {
+            setFullNameError(true)
+        } else {
+            setFullNameError(false)
+        } */
+    }
 
-        const data = {fullName, contactNo, emailState, address, productCompany, productCategory, problemState}
+    const submitQuery = async (e: React.SyntheticEvent) => {
+        e.preventDefault()
+/* 
+        const data = { fullName, contactNo, emailState, address, productCompany, productCategory, problemState }
 
         const submitData = await fetch('/api/sendEmail', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-              },
+            },
             body: JSON.stringify(data)
         })
 
         const { error, message } = await submitData.json();
-        console.log(message);
-        return;
-      /*   const response = await submitData.json()
-        console.log(response) */
-        
+        setMessageStatus(message)
+        return; */
+    }
+
+    let disabledButtonState = false
+
+    if (!fullName || !contactNo || !emailState || !address || !productCompany || !productCategory || !problemState || !check) {
+        disabledButtonState = true
+    } else {
+        disabledButtonState = false
     }
 
     return (
         <>
             <div className="container container-pad repair-services-page">
                 <form>
-                    <TextField id="fullName" label="Full Name" variant="outlined" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required/>
-                    <TextField id="mobileNumber" label="Contact No" variant="outlined" type="number" value={contactNo} onChange={(e) => setContactNo(parseInt(e.target.value))} required/>
-                    <TextField id="emailAddress" label="Email" variant="outlined" type="email" value={emailState} onChange={(e) => setEmailState(e.target.value)} required/>
-                    <TextField id="address" label="Address" variant="outlined" type="text" value={address} onChange={(e) => setAddress(e.target.value)} required/>
+                    <TextField id="fullName" label="Full Name" variant="outlined" type="text" value={fullName} onChange={fullNameHandler} required error={fullNameError} onBlur={fullNameHandler} name='fullName'/>
+                    <TextField id="mobileNumber" label="Contact No" variant="outlined" type="number" value={contactNo} onChange={fullNameHandler} onBlur={fullNameHandler} required error={contactError} name='contactNo'/>
+                    <TextField id="emailAddress" label="Email" variant="outlined" type="email" value={email} onChange={fullNameHandler}  onBlur={fullNameHandler} required error={emailError} name='email'/>
+                    <TextField id="address" label="Address" variant="outlined" type="text" value={address} onChange={fullNameHandler} onBlur={fullNameHandler} required name='address'/>
                     <div style={{ width: '200px', marginTop: '20px' }}>
                         <FormControl fullWidth>
                             <InputLabel id="productCompany">Company</InputLabel>
@@ -74,6 +100,7 @@ export const RepairServiceComponent = () => {
                                 label="Company"
                                 onChange={productCompanyChange}
                                 required
+                                error={companyError}
                             >
                                 <MenuItem value={'Blue Star'}>Blue Star</MenuItem>
                                 <MenuItem value={'Bosch'}>Bosch</MenuItem>
@@ -96,6 +123,7 @@ export const RepairServiceComponent = () => {
                                 value={productCategory}
                                 label="Category"
                                 onChange={productCategoryChange}
+                                error={categoryError}
                             >
                                 <MenuItem value={'AC'}>AC</MenuItem>
                                 <MenuItem value={'Air Cooler'}>Air Cooler</MenuItem>
@@ -115,6 +143,7 @@ export const RepairServiceComponent = () => {
                                 value={problemState}
                                 label="Problem"
                                 onChange={problemChange}
+                                error={problemError}
                             >
                                 <MenuItem value={'Thermostat Malfunction'}>Thermostat Malfunction</MenuItem>
                                 <MenuItem value={'Failing Fans'}>Failing Fans</MenuItem>
@@ -134,7 +163,7 @@ export const RepairServiceComponent = () => {
                         <Checkbox checked={check} onChange={() => setCheck(!check)} />
                         <span>I authorize to contact me on my Mobile Number and Email</span>
                     </div>
-                    <button className='submit-button' onClick={submitQuery}>Submit</button>
+                    <button className='submit-button' onClick={submitQuery} disabled={disabledButtonState}>Submit</button>
                 </form>
             </div>
             <style jsx>{`
