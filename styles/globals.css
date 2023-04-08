@@ -34,6 +34,14 @@ body {
   display: flex;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
+.row-gap-16 {
+  row-gap: 16px;
+}
+
 .nav-link, .submit-button {
   text-decoration: none;
   padding: 12px;
@@ -186,6 +194,45 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.name-container, .email-container, .contact-container, .address-container, .company-container, .category-container, .problem-container, .textarea-container, .checkbox-container   {
+  margin-bottom: 24px;
+}
+
+.checkbox-container {
+  margin-top: -4px;
+  display: flex;
+  align-items: center;
+}
+
+.email-container, .category-container  {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.name-container .MuiTextField-root, .address-container .MuiTextField-root, .email-container .MuiTextField-root, .contact-container .MuiTextField-root, .company-container, .category-container, .textarea-container  {
+  width: 100%;
+}
+
+.email-container .MuiTextField-root, .contact-container .MuiTextField-root, .company-container .MuiFormControl-fullWidth, .category-container .MuiFormControl-fullWidth  {
+  width: 97%;
+}
+
+.textarea-container textarea {
+  width: 100%;
+  padding: 16px;
+  resize: none;
+  overflow-y: auto;
+}
+
+.checkbox-container .MuiCheckbox-root {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  margin-left: -2px;
+}
+
+
 
 @media only screen and (max-width:767px) {
   .brand-img {
