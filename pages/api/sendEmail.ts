@@ -1,13 +1,13 @@
 
 import sendgrid from "@sendgrid/mail";
 import { env } from 'process';
-import { NextRequest, NextResponse } from "next/server";
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const apiKey: any = env.SENDGRID_API_KEY
 
 sendgrid.setApiKey(apiKey);
 
-export default async function handler(req: NextRequest, res: NextResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         await sendgrid.send({
             to: "ibrahimdev03@gmail.com", // Your email where you'll receive emails

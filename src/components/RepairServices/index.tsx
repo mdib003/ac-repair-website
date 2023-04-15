@@ -31,18 +31,22 @@ export const RepairServiceComponent = () => {
     const [problemError, setProblemError] = useState(false)
 
     const productCompanyChange = (e: SelectChangeEvent) => {
+        setMessageStatus('')
         setProductComapny(e.target.value as string);
     }
 
     const productCategoryChange = (e: SelectChangeEvent) => {
+        setMessageStatus('')
         setProductCategory(e.target.value as string);
     }
 
     const problemChange = (e: SelectChangeEvent) => {
+        setMessageStatus('')
         setProblemState(e.target.value as string);
     }
 
     const detailsHanlder = (e: any) => {
+        setMessageStatus('')
         if (e.target.name === 'fullName' && !userData.fullName) {
             setFullNameError(true)
         } else if (e.target.name === 'fullName') {
@@ -71,20 +75,25 @@ export const RepairServiceComponent = () => {
 
     const submitQuery = async (e: React.SyntheticEvent) => {
         e.preventDefault()
-        /* 
-                const data = { fullName, contactNo, emailState, address, productCompany, productCategory, problemState }
-        
-                const submitData = await fetch('/api/sendEmail', {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
-        
-                const { error, message } = await submitData.json();
-                setMessageStatus(message)
-                return; */
+
+        if (!userData.fullName || !userData.contactNo || !userData.email || !userData?.address || productCompany || productCategory || problemState) {
+            setMessageStatus('Please fill all the required fields')
+            return 
+        }
+
+        const data = { fullName: userData.fullName, contactNo: userData.contactNo, email: userData.email, address: userData?.address, productCompany, productCategory, problemState }
+
+        const submitData = await fetch('/api/sendEmail', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+
+        const { error, message } = await submitData.json();
+        setMessageStatus(message)
+        return;
     }
 
     return (
@@ -169,19 +178,20 @@ export const RepairServiceComponent = () => {
                             </FormControl>
                         </div>
                         <div className='textarea-container'>
-                        <TextareaAutosize
-                            aria-label="minimum height"
-                            minRows={3}
-                            placeholder="Brief your issue"
-                            value={detailIssue}
-                            onChange={(e) => setDetailIssue(e.target.value)}
-                        />
+                            <TextareaAutosize
+                                aria-label="minimum height"
+                                minRows={3}
+                                placeholder="Brief your issue"
+                                value={detailIssue}
+                                onChange={(e) => setDetailIssue(e.target.value)}
+                            />
                         </div>
                         <div className='checkbox-container'>
                             <Checkbox checked={check} onChange={() => setCheck(!check)} />
                             <span className='checkbox-text'>I authorize to contact me via Mobile and/or Email</span>
                         </div>
                         <button className='submit-button' onClick={submitQuery} disabled>Submit</button>
+                        {messageStatus && <p>{messageStatus}</p>}
                     </form>
                 </div>
             </div>

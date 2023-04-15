@@ -8,27 +8,21 @@ export const AboutComponent = () => {
     const imageRef = useRef() as React.MutableRefObject<HTMLDivElement>
     const imageRef2 = useRef() as React.MutableRefObject<HTMLDivElement>
 
-
-
-    useEffect(() => {
+/*     useEffect(() => {
         if (imageRef2?.current) {
             
             let checkElementPosition = imageRef2?.current?.getBoundingClientRect().top < (window.innerHeight - 150) ? true : false
             if (checkElementPosition) {
                 console.log('checkElementPosition', checkElementPosition)
                 imageRef2?.current?.classList?.add('show-img')
-            } /* else {
-                imageRef2?.current?.classList?.remove('show-img')
-            } */
+            } 
         }
 
         if (textRef2?.current) {
             let checkElementPosition = textRef2?.current?.getBoundingClientRect().top < (window.innerHeight - 150) ? true : false
             if (checkElementPosition) {
                 textRef2?.current?.classList?.add('translate-para')
-            } /* else {
-                textRef2?.current?.classList?.remove('translate-para')
-            } */
+            }
         }
 
         if (textRef?.current) {
@@ -38,7 +32,7 @@ export const AboutComponent = () => {
         if (imageRef?.current) {
             imageRef?.current?.classList?.add('show-img')
         }
-    }, [])
+    }, []) */
     return (
         <>
             <div className="container container-pad" ref={containerRef}>
@@ -48,14 +42,14 @@ export const AboutComponent = () => {
                         <p className="about-para">  Need help with your AC, Refrigerator, Washing Machine, or Microwave, we’ll be glad to help, and we can offer assistance for a wide range of other home comfort needs while we’re at it.
                         </p>
                     </div>
-                    <div className="about-img" ref={imageRef}>
+                    <div className="about-img show-img" ref={imageRef}>
                         <Image src='/happy-house-owner-lying-on-couch.jpg' alt='happy-house-owner-lying-on-couch' fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw" priority={true}/>
                     </div>
                 </div>
                 <div className="flex about-section">
-                    <div className="about-img2" ref={imageRef2}>
+                    <div className="about-img2 show-img" ref={imageRef2}>
                         <Image src='/272.jpg' alt='fixing the ac' fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw"/>
@@ -80,16 +74,16 @@ export const AboutComponent = () => {
                     width: 50%;
                     height: auto;
                     transition: all 0.5s ease;
-                    transform: translateY(25px);
-                    opacity: 0;
+                    
+                    opacity: 1;
                 }
 
                 .about-details2 {
                     width: 50%;
                     height: auto;
                     transition: all 0.5s ease;
-                    transform: translateY(25px);
-                    opacity: 0;
+                    
+                    opacity: 1;
                 }
 
                 .translate-para {
@@ -101,7 +95,7 @@ export const AboutComponent = () => {
                 .about-img {
                     width: 50%;
                     height: auto;
-                    opacity: 0;
+                    opacity: 1;
                     transition: all 0.5s ease;
                     position: relative;
                 }
@@ -109,7 +103,7 @@ export const AboutComponent = () => {
                 .about-img2 {
                     width: 50%;
                     height: auto;
-                    opacity: 0;
+                    opacity: 1;
                     transition: all 0.5s ease;
                     position: relative;
                 }
