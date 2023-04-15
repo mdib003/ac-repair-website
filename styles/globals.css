@@ -23,6 +23,10 @@ body {
   scroll-behavior: smooth;
 }
 
+body {
+  min-height: 100vh;
+}
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -36,6 +40,10 @@ body {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 .row-gap-16 {
