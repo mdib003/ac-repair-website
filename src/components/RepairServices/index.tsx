@@ -7,52 +7,61 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
-const problemsArray = 
-    {
-        "AC": [
-            "Less cooling/No cooling",
-            "Power on issues",
-            "Deep cleaning servicing",
-            "Installation",
-            "Un-installation",
-            "Water leaking"
-        ],
-        "Fridge": [
-            "Power on issues",
-            "Less cooling/No cooling",
-            "Water leaking",
-            "Over cooling",
-            "Bulp problem",
-        ],
-        "Washing Machine": [
-            "Fully automatic",
-            "Top load check up",
-            "Front load check up",
-            "Installation",
-            "Un-installation"
-        ],
-        "Deep Fridge": [
-            "Other"
-        ],
-        "Water Cooler": [
-            "Other"
-        ]
-    }
+type ProblemProps = {
+    [key:string]: string[]
+}
+
+const problemsArray =
+{
+    ac: [
+        "Less cooling",
+        "No cooling",
+        "Power on issues",
+        "Deep cleaning servicing",
+        "Installation",
+        "Un-installation",
+        "Water leaking"
+    ],
+    fridge: [
+        "Power on issues",
+        "Less cooling",
+        "No cooling",
+        "Water leaking",
+        "Over cooling",
+        "Bulp problem",
+    ],
+    washingMachine: [
+        "Fully automatic",
+        "Top load check up",
+        "Front load check up",
+        "Installation",
+        "Un-installation"
+    ],
+    deepFridge: [
+        "Other"
+    ],
+    waterCooler: [
+        "Other"
+    ]
+}
 
 
 
 export const RepairServiceComponent = () => {
 
-    const [problemsList, setProblemsList] = useState(problemsArray['AC'])
+    const [data, ] = useState<ProblemProps>(problemsArray)
+    const [problemsList, setProblemsList] = useState<string[]>(problemsArray.ac)
     const [userData, setUserData] = useState({
         fullName: '',
         email: '',
         contactNo: '',
         address: ''
     })
+
+
     const [productCompany, setProductComapny] = useState('Blue Star')
-    const [productCategory, setProductCategory] = useState('AC')
-    const [problemState, setProblemState] = useState(problemsArray['AC'][0])
+    const [productCategory, setProductCategory] = useState('ac')
+    const [problemState, setProblemState] = useState<string>(problemsArray['ac'][0])
     const [check, setCheck] = useState(false)
     const [detailIssue, setDetailIssue] = useState('')
     const [messageStatus, setMessageStatus] = useState("")
@@ -79,8 +88,8 @@ export const RepairServiceComponent = () => {
     }
 
     const problemsListChange = () => {
-        setProblemsList(problemsArray[productCategory])
-        setProblemState(problemsArray[productCategory][0])
+        setProblemsList(data[productCategory])
+        setProblemState(data[productCategory][0])
     }
 
     const problemChange = (e: SelectChangeEvent) => {
@@ -196,11 +205,11 @@ export const RepairServiceComponent = () => {
                                         onChange={productCategoryChange}
                                         error={categoryError}
                                     >
-                                        <MenuItem value={'AC'}>AC</MenuItem>
-                                        <MenuItem value={'Fridge'}>Fridge</MenuItem>
-                                        <MenuItem value={'Deep Fridge'}>Deep Fridge</MenuItem>
-                                        <MenuItem value={'Water Cooler'}>Water Cooler</MenuItem>
-                                        <MenuItem value={'Washing Machine'}>Washing Machine</MenuItem>
+                                        <MenuItem value={'ac'}>AC</MenuItem>
+                                        <MenuItem value={'fridge'}>Fridge</MenuItem>
+                                        <MenuItem value={'deepFridge'}>Deep Fridge</MenuItem>
+                                        <MenuItem value={'waterCooler'}>Water Cooler</MenuItem>
+                                        <MenuItem value={'washingMachine'}>Washing Machine</MenuItem>
                                     </Select>
                                 </FormControl>
                             </div>
@@ -216,9 +225,9 @@ export const RepairServiceComponent = () => {
                                     onChange={problemChange}
                                     error={problemError}
                                 >
-                                    {problemsList.map((p) => {
+                                    {problemsList?.map((p) => {
                                         return (
-                                            <MenuItem value={p}>{p}</MenuItem>
+                                            <MenuItem value={p} key={p}>{p}</MenuItem>
                                         )
                                     })}
                                 </Select>

@@ -129,6 +129,18 @@ body {
   height: auto !important;
 }
 
+.logo-container {
+  width: 100px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  position: relative !important;
+  height: auto !important;
+}
+
 .home-nav-link {
   display: block;
 }

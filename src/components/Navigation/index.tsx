@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -35,7 +36,9 @@ export const Navigation = () => {
             <div className="home-page-nav " ref={navRef}>
                 <div className='container'>
                     <div className="nav-container">
-                        <h2>Logo</h2>
+                        <div className="logo-container">
+                        <Image src='/logo.jpeg' alt='logo'  fill style={{ objectFit: 'cover' }}/>
+                        </div>
                         <ul className="nav-list">
                             <li><Link href='/' className={`nav-link ${router.pathname === '/' ? 'active-link' : ''}`}>Home</Link></li>
                             <li><Link href='/repair-services' className={`nav-link ${router.pathname === '/repair-services' ? 'active-link' : ''}`}>Repair Services</Link></li>
