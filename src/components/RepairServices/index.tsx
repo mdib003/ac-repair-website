@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from '@mui/material/Checkbox';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,18 +7,52 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
+const problemsArray = 
+    {
+        "AC": [
+            "Less cooling/No cooling",
+            "Power on issues",
+            "Deep cleaning servicing",
+            "Installation",
+            "Un-installation",
+            "Water leaking"
+        ],
+        "Fridge": [
+            "Power on issues",
+            "Less cooling/No cooling",
+            "Water leaking",
+            "Over cooling",
+            "Bulp problem",
+        ],
+        "Washing Machine": [
+            "Fully automatic",
+            "Top load check up",
+            "Front load check up",
+            "Installation",
+            "Un-installation"
+        ],
+        "Deep Fridge": [
+            "Other"
+        ],
+        "Water Cooler": [
+            "Other"
+        ]
+    }
+
+
 
 export const RepairServiceComponent = () => {
 
+    const [problemsList, setProblemsList] = useState(problemsArray['AC'])
     const [userData, setUserData] = useState({
         fullName: '',
         email: '',
         contactNo: '',
         address: ''
     })
-    const [productCompany, setProductComapny] = useState('')
-    const [productCategory, setProductCategory] = useState('')
-    const [problemState, setProblemState] = useState('')
+    const [productCompany, setProductComapny] = useState('Blue Star')
+    const [productCategory, setProductCategory] = useState('AC')
+    const [problemState, setProblemState] = useState(problemsArray['AC'][0])
     const [check, setCheck] = useState(false)
     const [detailIssue, setDetailIssue] = useState('')
     const [messageStatus, setMessageStatus] = useState("")
@@ -30,6 +64,10 @@ export const RepairServiceComponent = () => {
     const [categoryError, setCategoryError] = useState(false)
     const [problemError, setProblemError] = useState(false)
 
+    useEffect(() => {
+        problemsListChange()
+    }, [productCategory])
+
     const productCompanyChange = (e: SelectChangeEvent) => {
         setMessageStatus('')
         setProductComapny(e.target.value as string);
@@ -40,12 +78,17 @@ export const RepairServiceComponent = () => {
         setProductCategory(e.target.value as string);
     }
 
+    const problemsListChange = () => {
+        setProblemsList(problemsArray[productCategory])
+        setProblemState(problemsArray[productCategory][0])
+    }
+
     const problemChange = (e: SelectChangeEvent) => {
         setMessageStatus('')
         setProblemState(e.target.value as string);
     }
 
-    const detailsHanlder = (e: any) => {
+    const detailsHanlder = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessageStatus('')
         if (e.target.name === 'fullName' && !userData.fullName) {
             setFullNameError(true)
@@ -75,7 +118,6 @@ export const RepairServiceComponent = () => {
 
     const submitQuery = async (e: React.SyntheticEvent) => {
         e.preventDefault()
-        console.log('messageStatus', messageStatus)
 
         if (!userData.fullName || !userData.contactNo || !userData.email || !userData?.address || !productCompany || !productCategory || !problemState) {
             setMessageStatus('Please fill all the required fields')
@@ -93,7 +135,6 @@ export const RepairServiceComponent = () => {
         })
 
         const { error, message } = await submitData.json();
-        console.log('message', message, error)
         if (message) {
             setMessageStatus(message)
         }
@@ -146,7 +187,7 @@ export const RepairServiceComponent = () => {
                             </div>
                             <div className='category-container'>
                                 <FormControl fullWidth>
-                                    <InputLabel id="productCategory">Category</InputLabel>
+                                    <InputLabel id="productCategory">Product</InputLabel>
                                     <Select
                                         labelId="productCategory"
                                         id="productCategory"
@@ -175,9 +216,11 @@ export const RepairServiceComponent = () => {
                                     onChange={problemChange}
                                     error={problemError}
                                 >
-                                    <MenuItem value={'Thermostat Malfunction'}>Thermostat Malfunction</MenuItem>
-                                    <MenuItem value={'Failing Fans'}>Failing Fans</MenuItem>
-                                    <MenuItem value={'Leaky Ducts'}>Leaky Ducts</MenuItem>
+                                    {problemsList.map((p) => {
+                                        return (
+                                            <MenuItem value={p}>{p}</MenuItem>
+                                        )
+                                    })}
                                 </Select>
                             </FormControl>
                         </div>

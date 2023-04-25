@@ -40,7 +40,7 @@ export const Navigation = () => {
                             <li><Link href='/' className={`nav-link ${router.pathname === '/' ? 'active-link' : ''}`}>Home</Link></li>
                             <li><Link href='/repair-services' className={`nav-link ${router.pathname === '/repair-services' ? 'active-link' : ''}`}>Repair Services</Link></li>
                             <li><Link href='/about' className={`nav-link ${router.pathname === '/about' ? 'active-link' : ''}`}>About</Link></li>
-                            <li><Link href='/contact' className={`nav-link ${router.pathname === '/contact' ? 'active-link' : ''}`}>Contact</Link></li>
+                       {/*      <li><Link href='/contact' className={`nav-link ${router.pathname === '/contact' ? 'active-link' : ''}`}>Contact</Link></li> */}
                         </ul>
                         <span className="ham" onClick={showMobMenuFunc}></span>
                         <div className="mob-menu" ref={mobContainerRef}>
@@ -49,7 +49,7 @@ export const Navigation = () => {
                                 <li onClick={closeMobMenu}><Link href='/' className={`mob-nav-link`}>Home</Link></li>
                                 <li onClick={closeMobMenu}><Link href='/repair-services' className={`mob-nav-link`}>Repair Services</Link></li>
                                 <li onClick={closeMobMenu}><Link href='/about' className={`mob-nav-link `}>About</Link></li>
-                                <li onClick={closeMobMenu}><Link href='/contact' className={`mob-nav-link`}>Contact</Link></li>
+                             {/*    <li onClick={closeMobMenu}><Link href='/contact' className={`mob-nav-link`}>Contact</Link></li> */}
                             </ul>
                         </div>
                     </div>
