@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import Button from '@mui/material/Button';
+
 
 export const RepairServiceComponent = () => {
 
@@ -75,10 +75,11 @@ export const RepairServiceComponent = () => {
 
     const submitQuery = async (e: React.SyntheticEvent) => {
         e.preventDefault()
+        console.log('messageStatus', messageStatus)
 
-        if (!userData.fullName || !userData.contactNo || !userData.email || !userData?.address || productCompany || productCategory || problemState) {
+        if (!userData.fullName || !userData.contactNo || !userData.email || !userData?.address || !productCompany || !productCategory || !problemState) {
             setMessageStatus('Please fill all the required fields')
-            return 
+            return
         }
 
         const data = { fullName: userData.fullName, contactNo: userData.contactNo, email: userData.email, address: userData?.address, productCompany, productCategory, problemState }
@@ -92,7 +93,10 @@ export const RepairServiceComponent = () => {
         })
 
         const { error, message } = await submitData.json();
-        setMessageStatus(message)
+        console.log('message', message, error)
+        if (message) {
+            setMessageStatus(message)
+        }
         return;
     }
 
@@ -190,7 +194,7 @@ export const RepairServiceComponent = () => {
                             <Checkbox checked={check} onChange={() => setCheck(!check)} />
                             <span className='checkbox-text'>I authorize to contact me via Mobile and/or Email</span>
                         </div>
-                        <button className='submit-button' onClick={submitQuery} disabled>Submit</button>
+                        <button className='submit-button' onClick={submitQuery}>Submit</button>
                         {messageStatus && <p>{messageStatus}</p>}
                     </form>
                 </div>
