@@ -1,14 +1,15 @@
 import TextField from '@mui/material/TextField';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Checkbox from '@mui/material/Checkbox';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
+import emailjs from '@emailjs/browser';
 
 type ProblemProps = {
-    [key:string]: string[]
+    [key: string]: string[]
 }
 
 const problemsArray =
@@ -49,7 +50,9 @@ const problemsArray =
 
 export const RepairServiceComponent = () => {
 
-    const [data, ] = useState<ProblemProps>(problemsArray)
+    const formRef = useRef() as React.MutableRefObject<string | HTMLFormElement>
+
+    const [data,] = useState<ProblemProps>(problemsArray)
     const [problemsList, setProblemsList] = useState<string[]>(problemsArray.ac)
     const [userData, setUserData] = useState({
         fullName: '',
@@ -57,8 +60,6 @@ export const RepairServiceComponent = () => {
         contactNo: '',
         address: ''
     })
-
-
     const [productCompany, setProductComapny] = useState('Blue Star')
     const [productCategory, setProductCategory] = useState('ac')
     const [problemState, setProblemState] = useState<string>(problemsArray['ac'][0])
@@ -97,7 +98,7 @@ export const RepairServiceComponent = () => {
         setProblemState(e.target.value as string);
     }
 
-    const detailsHanlder = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const detailsHanlder = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setMessageStatus('')
         if (e.target.name === 'fullName' && !userData.fullName) {
             setFullNameError(true)
@@ -135,18 +136,29 @@ export const RepairServiceComponent = () => {
 
         const data = { fullName: userData.fullName, contactNo: userData.contactNo, email: userData.email, address: userData?.address, productCompany, productCategory, problemState }
 
-        const submitData = await fetch('/api/sendEmail', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        })
+        /*  const submitData = await fetch('/api/sendEmail', {
+             method: 'POST',
+             headers: {
+                 "Content-Type": "application/json",
+             },
+             body: JSON.stringify(data)
+         }) */
 
-        const { error, message } = await submitData.json();
-        if (message) {
-            setMessageStatus(message)
-        }
+       emailjs.sendForm('service_znnk28f', 'template_ivjxoem', formRef.current, 'CrjGpP2bD3_YfgdUy')
+            .then((result) => {
+                console.log(result.text);
+                setMessageStatus('Your message has been delivered')
+                setUserData({
+                    fullName: '',
+                    email: '',
+                    contactNo: '',
+                    address: ''
+                })
+            }, (error) => {
+                console.log(error.text);
+            }); 
+ 
+        /*  const { error, message } = await submitData.json(); */
         return;
     }
 
@@ -154,7 +166,7 @@ export const RepairServiceComponent = () => {
         <>
             <div className="container repair-services-page">
                 <div className='form-container'>
-                    <form>
+                    <form ref={formRef}>
                         <div className='name-container'>
                             <TextField id="fullName" label="Full Name" variant="outlined" type="text" value={userData.fullName} onChange={detailsHanlder} required error={fullNameError} onBlur={detailsHanlder} name='fullName' />
                         </div>
@@ -180,6 +192,7 @@ export const RepairServiceComponent = () => {
                                         label="Company"
                                         onChange={productCompanyChange}
                                         required
+                                        name='productCompany'
                                         error={companyError}
                                     >
                                         <MenuItem value={'Blue Star'}>Blue Star</MenuItem>
@@ -204,6 +217,7 @@ export const RepairServiceComponent = () => {
                                         label="Category"
                                         onChange={productCategoryChange}
                                         error={categoryError}
+                                        name='product'
                                     >
                                         <MenuItem value={'ac'}>AC</MenuItem>
                                         <MenuItem value={'fridge'}>Fridge</MenuItem>
@@ -224,6 +238,7 @@ export const RepairServiceComponent = () => {
                                     label="Problem"
                                     onChange={problemChange}
                                     error={problemError}
+                                    name='problem'
                                 >
                                     {problemsList?.map((p) => {
                                         return (
@@ -240,6 +255,7 @@ export const RepairServiceComponent = () => {
                                 placeholder="Brief your issue"
                                 value={detailIssue}
                                 onChange={(e) => setDetailIssue(e.target.value)}
+                                name='message'
                             />
                         </div>
                         <div className='checkbox-container'>
