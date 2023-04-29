@@ -261,7 +261,7 @@ input::-webkit-inner-spin-button {
   margin-left: -2px;
 }
 
-.repair-services-page .css-zzms1-MuiSnackbar-root {
+.repair-services-page .MuiSnackbar-root {
   top: 85px !important; 
 }
 
