@@ -279,6 +279,11 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
+.social-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 16px;
+}
 
 @media only screen and (max-width:767px) {
   .brand-img {

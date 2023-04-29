@@ -1,3 +1,4 @@
+import Link from "next/link";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -15,12 +16,12 @@ export const Footer = () => {
                     </div>
                     <div className='flex justify-center social-links'>
                         <p>Follow us :</p>
-                        <a href='/'><LinkedInIcon/></a>
-                        <a href='/'><FacebookIcon/></a>
-                        <a href='/'><InstagramIcon/></a>
+                        <Link href='/'><LinkedInIcon/></Link>
+                        <Link href='/'><FacebookIcon/></Link>
+                        <Link href='/'><InstagramIcon/></Link>
                     </div>
                     <div className="footer-details">
-                        <p>Copyright @2023 | HomeComfort India</p>
+                        <p>Copyright @ 2023 | HomeComfort India</p>
                     </div>
                     <span className="credits">Image credits: <a href='https://www.freepik.com/'>freepik</a></span>
                 </div>
@@ -78,13 +79,8 @@ export const Footer = () => {
 
             .social-links {
                 margin-top: 42px;
-            }
-
-            .social-links a {
-                color: #fff;
-                text-decoration: none;
-                margin-left: 16px;
-            }
+                font-size: 16px;
+            }            
 
             @media only screen and (max-width:500px) {
                 .title h6 {
