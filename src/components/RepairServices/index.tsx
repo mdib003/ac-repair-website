@@ -1,15 +1,15 @@
 import TextField from '@mui/material/TextField';
 import React, { useEffect, useState, useRef } from "react";
+import emailjs from '@emailjs/browser';
 import Checkbox from '@mui/material/Checkbox';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import emailjs from '@emailjs/browser';
 import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
 
 type ProblemProps = {
     [key: string]: string[]
@@ -313,6 +313,13 @@ export const RepairServiceComponent = () => {
 
               .closeBar {
                 margin-left: 12px;
+                cursor: pointer;
+              }
+
+              @media only screen and (max-width:767px) {
+                .form-container {
+                    box-shadow: none;
+                }
               }
              
         `}</style>
