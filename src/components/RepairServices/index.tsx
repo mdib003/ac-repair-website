@@ -7,6 +7,9 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import emailjs from '@emailjs/browser';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 type ProblemProps = {
     [key: string]: string[]
@@ -39,18 +42,29 @@ const problemsArray =
         "Un-installation"
     ],
     deepFridge: [
-        "Other"
+        "Power on issues",
+        "Less cooling",
+        "No cooling",
+        "Water leaking",
+        "Over cooling",
+        "Bulp problem",
     ],
     waterCooler: [
         "Other"
     ]
 }
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 export const RepairServiceComponent = () => {
 
-    const formRef = useRef() as React.MutableRefObject<string | HTMLFormElement>
+    const formRef = useRef() as React.MutableRefObject<HTMLFormElement>
 
     const [data,] = useState<ProblemProps>(problemsArray)
     const [problemsList, setProblemsList] = useState<string[]>(problemsArray.ac)
@@ -70,21 +84,28 @@ export const RepairServiceComponent = () => {
     const [contactError, setContactError] = useState(false)
     const [emailError, setEmailError] = useState(false)
     const [addressError, setAddressError] = useState(false)
-    const [companyError, setCompanyError] = useState(false)
+    /* const [companyError, setCompanyError] = useState(false)
     const [categoryError, setCategoryError] = useState(false)
-    const [problemError, setProblemError] = useState(false)
+    const [problemError, setProblemError] = useState(false) */
+    const [open, setOpen] = React.useState(false);
+    const [checkSeverity, setSeverity] = useState(true)
 
     useEffect(() => {
         problemsListChange()
     }, [productCategory])
 
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
     const productCompanyChange = (e: SelectChangeEvent) => {
-        setMessageStatus('')
         setProductComapny(e.target.value as string);
     }
 
     const productCategoryChange = (e: SelectChangeEvent) => {
-        setMessageStatus('')
         setProductCategory(e.target.value as string);
     }
 
@@ -94,12 +115,10 @@ export const RepairServiceComponent = () => {
     }
 
     const problemChange = (e: SelectChangeEvent) => {
-        setMessageStatus('')
         setProblemState(e.target.value as string);
     }
 
     const detailsHanlder = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setMessageStatus('')
         if (e.target.name === 'fullName' && !userData.fullName) {
             setFullNameError(true)
         } else if (e.target.name === 'fullName') {
@@ -130,24 +149,20 @@ export const RepairServiceComponent = () => {
         e.preventDefault()
 
         if (!userData.fullName || !userData.contactNo || !userData.email || !userData?.address || !productCompany || !productCategory || !problemState) {
-            setMessageStatus('Please fill all the required fields')
+            setMessageStatus('Please fill all required fields')
+            setSeverity(false)
+            setOpen(true);
             return
         }
 
         const data = { fullName: userData.fullName, contactNo: userData.contactNo, email: userData.email, address: userData?.address, productCompany, productCategory, problemState }
 
-        /*  const submitData = await fetch('/api/sendEmail', {
-             method: 'POST',
-             headers: {
-                 "Content-Type": "application/json",
-             },
-             body: JSON.stringify(data)
-         }) */
-
-       emailjs.sendForm('service_znnk28f', 'template_ivjxoem', formRef.current, 'CrjGpP2bD3_YfgdUy')
+        emailjs.sendForm('service_znnk28f', 'template_ivjxoem', formRef.current, 'CrjGpP2bD3_YfgdUy')
             .then((result) => {
                 console.log(result.text);
-                setMessageStatus('Your message has been delivered')
+                setMessageStatus('Thank you!, We will reach out to you shortly')
+                setSeverity(true)
+                setOpen(true);
                 setUserData({
                     fullName: '',
                     email: '',
@@ -155,16 +170,21 @@ export const RepairServiceComponent = () => {
                     address: ''
                 })
             }, (error) => {
+                setMessageStatus('Sorry, Your message could not be send. Please try again')
+                setSeverity(false)
+                setOpen(true);
                 console.log(error.text);
-            }); 
- 
-        /*  const { error, message } = await submitData.json(); */
+            });
+
         return;
     }
 
     return (
         <>
             <div className="container repair-services-page">
+                <Snackbar open={open} /* autoHideDuration={3000} */ onClose={handleClose} anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>                                     
+                    <Alert severity={checkSeverity ? "success" : "error"} className='flex justify-between items-center'><span>{messageStatus}</span> <span className='closeBar' onClick={() => setOpen(false)}>&#10005;</span></Alert>                    
+                </Snackbar>
                 <div className='form-container'>
                     <form ref={formRef}>
                         <div className='name-container'>
@@ -193,7 +213,7 @@ export const RepairServiceComponent = () => {
                                         onChange={productCompanyChange}
                                         required
                                         name='productCompany'
-                                        error={companyError}
+                                    /* error={companyError} */
                                     >
                                         <MenuItem value={'Blue Star'}>Blue Star</MenuItem>
                                         <MenuItem value={'Bosch'}>Bosch</MenuItem>
@@ -216,7 +236,7 @@ export const RepairServiceComponent = () => {
                                         value={productCategory}
                                         label="Category"
                                         onChange={productCategoryChange}
-                                        error={categoryError}
+                                        /*   error={categoryError} */
                                         name='product'
                                     >
                                         <MenuItem value={'ac'}>AC</MenuItem>
@@ -237,7 +257,7 @@ export const RepairServiceComponent = () => {
                                     value={problemState}
                                     label="Problem"
                                     onChange={problemChange}
-                                    error={problemError}
+                                    /*    error={problemError} */
                                     name='problem'
                                 >
                                     {problemsList?.map((p) => {
@@ -263,7 +283,6 @@ export const RepairServiceComponent = () => {
                             <span className='checkbox-text'>I authorize to contact me via Mobile and/or Email</span>
                         </div>
                         <button className='submit-button' onClick={submitQuery}>Submit</button>
-                        {messageStatus && <p>{messageStatus}</p>}
                     </form>
                 </div>
             </div>
@@ -290,6 +309,11 @@ export const RepairServiceComponent = () => {
                 width: 100%;
                 margin-left: 0px;
               }
+
+              .closeBar {
+                margin-left: 12px;
+              }
+             
         `}</style>
         </>
     )

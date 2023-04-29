@@ -37,7 +37,7 @@ export const Navigation = () => {
                 <div className='container'>
                     <div className="nav-container">
                         <div className="logo-container">
-                        <Image src='/logo.jpeg' alt='logo'  fill style={{ objectFit: 'cover' }}/>
+                        <Image src='/logo.png' alt='logo'  fill style={{ objectFit: 'cover' }}/>
                         </div>
                         <ul className="nav-list">
                             <li><Link href='/' className={`nav-link ${router.pathname === '/' ? 'active-link' : ''}`}>Home</Link></li>
