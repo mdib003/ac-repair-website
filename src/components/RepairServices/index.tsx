@@ -155,7 +155,7 @@ export const RepairServiceComponent = () => {
             return
         }
 
-        const data = { fullName: userData.fullName, contactNo: userData.contactNo, email: userData.email, address: userData?.address, productCompany, productCategory, problemState }
+       /*  const data = { fullName: userData.fullName, contactNo: userData.contactNo, email: userData.email, address: userData?.address, productCompany, productCategory, problemState } */
 
         emailjs.sendForm('service_znnk28f', 'template_ivjxoem', formRef.current, 'CrjGpP2bD3_YfgdUy')
             .then((result) => {
@@ -182,7 +182,7 @@ export const RepairServiceComponent = () => {
     return (
         <>
             <div className="container repair-services-page">
-                <Snackbar open={open} /* autoHideDuration={3000} */ onClose={handleClose} anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>                                     
+                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ horizontal: 'center', vertical: 'top' }}>                                     
                     <Alert severity={checkSeverity ? "success" : "error"} className='flex justify-between items-center'><span>{messageStatus}</span> <span className='closeBar' onClick={() => setOpen(false)}>&#10005;</span></Alert>                    
                 </Snackbar>
                 <div className='form-container'>
@@ -224,6 +224,7 @@ export const RepairServiceComponent = () => {
                                         <MenuItem value={'Lloyd'}>Lloyd</MenuItem>
                                         <MenuItem value={'Mitashi'}>Mitashi</MenuItem>
                                         <MenuItem value={'Onida'}>Onida</MenuItem>
+                                        <MenuItem value={'Other'}>Other</MenuItem>
                                     </Select>
                                 </FormControl>
                             </div>
