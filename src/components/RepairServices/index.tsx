@@ -10,11 +10,6 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
-
-type ProblemProps = {
-    [key: string]: string[]
-}
-
 const problemsArray =
 {
     ac: [
@@ -61,6 +56,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+type ProblemProps = {
+    [key: string]: string[]
+}
 
 export const RepairServiceComponent = () => {
 
@@ -83,15 +81,13 @@ export const RepairServiceComponent = () => {
     const [fullNameError, setFullNameError] = useState(false)
     const [contactError, setContactError] = useState(false)
     const [emailError, setEmailError] = useState(false)
-    const [addressError, setAddressError] = useState(false)
-    /* const [companyError, setCompanyError] = useState(false)
-    const [categoryError, setCategoryError] = useState(false)
-    const [problemError, setProblemError] = useState(false) */
+    const [addressError, setAddressError] = useState(false) 
     const [open, setOpen] = React.useState(false);
     const [checkSeverity, setSeverity] = useState(true)
 
     useEffect(() => {
-        problemsListChange()
+        setProblemsList(data[productCategory])
+        setProblemState(data[productCategory][0])
     }, [productCategory])
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -107,11 +103,6 @@ export const RepairServiceComponent = () => {
 
     const productCategoryChange = (e: SelectChangeEvent) => {
         setProductCategory(e.target.value as string);
-    }
-
-    const problemsListChange = () => {
-        setProblemsList(data[productCategory])
-        setProblemState(data[productCategory][0])
     }
 
     const problemChange = (e: SelectChangeEvent) => {
@@ -157,7 +148,7 @@ export const RepairServiceComponent = () => {
 
        /*  const data = { fullName: userData.fullName, contactNo: userData.contactNo, email: userData.email, address: userData?.address, productCompany, productCategory, problemState } */
 
-        emailjs.sendForm('service_znnk28f', 'template_ivjxoem', formRef.current, 'CrjGpP2bD3_YfgdUy')
+        emailjs.sendForm(process.env.NEXT_PUBLIC_SERVICE_ID as string, process.env.NEXT_PUBLIC_TEMPLATE_ID as string, formRef.current, process.env.NEXT_PUBLIC_PUBLIC_KEY as string)
             .then((result) => {
                 console.log(result.text);
                 setMessageStatus('Thank you!, We will reach out to you shortly')
