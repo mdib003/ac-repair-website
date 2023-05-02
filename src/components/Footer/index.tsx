@@ -17,7 +17,7 @@ export const Footer = () => {
                     <div className='flex justify-center social-links'>
                         <p>Follow us :</p>
                         <Link href='/'><LinkedInIcon/></Link>
-                        <Link href='/'><FacebookIcon/></Link>
+                        <a href='https://www.facebook.com/people/HomeComfort-India/100092293362342/?mibextid=LQQJ4d' target="_blank"><FacebookIcon/></a>
                         <Link href='/'><InstagramIcon/></Link>
                     </div>
                     <div className="footer-details">
